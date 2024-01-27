@@ -165,6 +165,9 @@ const notifySlack = (payload) => __awaiter(void 0, void 0, void 0, function* () 
 });
 const run = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const channelid = process.env.SLACK_CHANNEL_ID;
+        if (!channelid)
+            throw new Error("No SLACK_CHANNEL_ID provided");
         const notifyWhen = parseStatusList((0, core_1.getInput)("notify_when"));
         const jobStatus = (0, core_1.getInput)("status");
         if (!notifyWhen.includes(jobStatus))
