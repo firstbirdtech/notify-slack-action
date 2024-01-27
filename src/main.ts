@@ -98,7 +98,7 @@ const getWorkflowUrl = async (repo: string, name: string) => {
   return ""
 }
 
-export const buildPayload = async (channelId) => {
+export const buildPayload = async (channelId: string) => {
   const repo = `${context.repo.owner}/${context.repo.repo}`
   const repoUrl = `${context.serverUrl}/${repo}`
   const jobStatus = getInput("status") as JobStatus
