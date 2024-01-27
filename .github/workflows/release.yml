@@ -30,8 +30,8 @@ jobs:
           echo "Admins: $admins"
       - name: Get Admins
         env:
-          THEUSER: ${{ github.event.head_commit.author.username }}
-          THEADMIN: ${{steps.admins.outputs}}
+          THEUSER: ${{ format('|{0}|', github.event.head_commit.author.username) }}
+          THEADMIN: ${{ steps.admins.outputs.admins }}
         run: |
           echo $THEUSER --- $THEADMIN
   create-release:
