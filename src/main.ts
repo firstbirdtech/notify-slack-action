@@ -136,7 +136,10 @@ export const buildPayload = async (channelid: string) => {
     footer: footer,
   }
 
-  const payload = { attachments: [attachment], channel: channelid}
+  const payload = { 
+    attachments: [attachment], 
+    channel: channelid, 
+  }
   return JSON.stringify(payload)
 }
 
@@ -146,7 +149,10 @@ const notifySlack = async (payload: string) => {
 
   fetch("https://slack.com/api/chat.postMessage", {
     method: "POST",
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}`},
+    headers: { 
+      "Content-Type": "application/json", 
+      Authorization: `Bearer ${token}`, 
+    },
     body: payload,
   })
 }
