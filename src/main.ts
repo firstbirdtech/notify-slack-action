@@ -98,7 +98,7 @@ const getWorkflowUrl = async (repo: string, name: string) => {
   return ""
 }
 
-export const buildPayload = async () => {
+export const buildPayload = async (channelId) => {
   const repo = `${context.repo.owner}/${context.repo.repo}`
   const repoUrl = `${context.serverUrl}/${repo}`
   const jobStatus = getInput("status") as JobStatus
@@ -136,7 +136,7 @@ export const buildPayload = async () => {
     footer: footer,
   }
 
-  const payload = { attachments: [attachment] }
+  const payload = { attachments: [attachment], channel: channelId}
   return JSON.stringify(payload)
 }
 
@@ -146,18 +146,21 @@ const notifySlack = async (payload: string) => {
 
   fetch("https://slack.com/api/chat.postMessage", {
     method: "POST",
-    headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}`},
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}`},
     body: payload,
   })
 }
 
 const run = async () => {
   try {
+    const channelId = process.env.SLACK_CHANNEL_ID
+    if (!channelId) throw new Error("No SLACK_CHANNEL_ID provided")
+
     const notifyWhen = parseStatusList(getInput("notify_when"))
     const jobStatus = getInput("status") as JobStatus
     if (!notifyWhen.includes(jobStatus)) return
 
-    const payload = await buildPayload()
+    const payload = await buildPayload(channelId)
     await notifySlack(payload)
   } catch (e) {
     if (e instanceof Error) setFailed(e.message)
