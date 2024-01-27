@@ -154,12 +154,12 @@ const buildPayload = () => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.buildPayload = buildPayload;
 const notifySlack = (payload) => __awaiter(void 0, void 0, void 0, function* () {
-    const webhookUrl = process.env.SLACK_WEBHOOK_URL;
-    if (!webhookUrl)
-        throw new Error("No SLACK_WEBHOOK_URL provided");
-    (0, node_fetch_1.default)(webhookUrl, {
+    const token = process.env.SLACK_BOT_TOKEN;
+    if (!token)
+        throw new Error("No SLACK_BOT_TOKEN provided");
+    (0, node_fetch_1.default)("https://slack.com/api/chat.postMessage", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "Authentication" : `Bearer ${token}`},
         body: payload,
     });
 });

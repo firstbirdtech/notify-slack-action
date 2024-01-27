@@ -141,12 +141,12 @@ export const buildPayload = async () => {
 }
 
 const notifySlack = async (payload: string) => {
-  const webhookUrl = process.env.SLACK_WEBHOOK_URL
-  if (!webhookUrl) throw new Error("No SLACK_WEBHOOK_URL provided")
+  const token = process.env.SLACK_BOT_TOKEN
+  if (!token) throw new Error("No SLACK_BOT_TOKEN provided")
 
-  fetch(webhookUrl, {
+  fetch("https://slack.com/api/chat.postMessage", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}`},
     body: payload,
   })
 }
