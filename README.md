@@ -1,6 +1,7 @@
 [![Create Release](https://github.com/ravsamhq/notify-slack-action/actions/workflows/release.yml/badge.svg)](https://github.com/ravsamhq/notify-slack-action/actions/workflows/release.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+
 # Notify Slack Action
 
 Send Github Actions workflow status notifications to Slack regarding failures, warnings or even success. You can read more about the action in [our blog post](https://www.ravsam.in/blog/send-slack-notification-when-github-actions-fails/).
